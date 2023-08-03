@@ -2,7 +2,6 @@ const router = require("express").Router();
 const { Tag, Product, ProductTag } = require("../../models");
 
 // The `/api/tags` endpoint
-
 router.get("/", async (req, res) => {
   // find all tags
   try {
@@ -16,6 +15,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET /api/tags/1
 router.get("/:id", async (req, res) => {
   // find a single tag by id
   try {
@@ -34,6 +34,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// POST /api/tags
 router.post("/", async (req, res) => {
   // create a new tag
   try {
@@ -45,6 +46,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// PUT /api/tags/1
 router.put("/:id", async (req, res) => {
   // update a tag's name by id
   try {
@@ -64,6 +66,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// DELETE /api/tags/1
 router.delete("/:id", async (req, res) => {
   // delete on tag by id
   try {
