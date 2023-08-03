@@ -10,13 +10,14 @@ router.get("/", async (req, res) => {
       include: [{ model: Product }],
     });
     res.status(200).json(tagData);
+    // Catch any errors
   } catch (err) {
     res.status(500).json({ error: "Couldn't grab what you wanted." });
   }
 });
 
 router.get("/:id", async (req, res) => {
-  // find a single tag by its `id`
+  // find a single tag by id
   try {
     const tagData = await Tag.findByPk(req.params.id, {
       include: [{ model: Product, through: ProductTag, as: "tag_products" }],
@@ -31,7 +32,6 @@ router.get("/:id", async (req, res) => {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch category." });
   }
-  // be sure to include its associated Product data
 });
 
 router.post("/", async (req, res) => {
@@ -39,13 +39,14 @@ router.post("/", async (req, res) => {
   try {
     const tagData = await Tag.create(req.body);
     res.status(200).json(tagData);
+    // Catch any errors
   } catch (err) {
     res.status(500).json({ error: "Couldn't grab what you wanted." });
   }
 });
 
 router.put("/:id", async (req, res) => {
-  // update a tag's name by its `id` value
+  // update a tag's name by id
   try {
     const [rowsUpdated, [updatedTag]] = await Tag.update(req.body, {
       where: {
@@ -58,12 +59,13 @@ router.put("/:id", async (req, res) => {
     }
     res.status(200).json(updatedTag);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Couldn't grab what you wanted." });
   }
 });
 
 router.delete("/:id", async (req, res) => {
-  // delete on tag by its `id` value
+  // delete on tag by id
   try {
     const tagData = await Tag.destroy({
       where: {
@@ -75,6 +77,7 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).json({ message: "No tag found with that id!" });
     }
     res.status(200).json({ message: "Tag deleted." });
+    // Catch any errors
   } catch (err) {
     res.status(500).json({ error: "Couldn't grab what you wanted." });
   }
