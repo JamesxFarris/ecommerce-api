@@ -26,8 +26,9 @@ router.get("/:id", async (req, res) => {
       include: [
         {
           model: Category,
-          through: ProductTag,
-          as: "category_products",
+        },
+        {
+          model: Tag,
         },
       ],
     });

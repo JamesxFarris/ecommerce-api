@@ -9,29 +9,26 @@ router.get("/", async (req, res) => {
       include: [{ model: Product }],
     });
     res.status(200).json(tagData);
-    // Catch any errors
   } catch (err) {
-    res.status(500).json({ error: "Couldn't grab what you wanted." });
+    res.status(500).json(err);
   }
 });
 
-// GET /api/tags/1
 router.get("/:id", async (req, res) => {
-  // find a single tag by id
+  // find a single tag by its `id`
   try {
     const tagData = await Tag.findByPk(req.params.id, {
-      include: [{ model: Product, through: ProductTag, as: "tag_products" }],
+      include: [{ model: Product }],
     });
-    if (!categoryData) {
-      res.status(404).json({ message: "No category found with that id!" });
+    if (!tagData) {
+      res.status(404).json({ message: "No tag with this id!" });
       return;
     }
     res.status(200).json(tagData);
   } catch (err) {
-    // Catch any errors
-    console.error(err);
-    res.status(500).json({ error: "Failed to fetch category." });
+    res.status(500).json(err);
   }
+  // be sure to include its associated Product data
 });
 
 // POST /api/tags
