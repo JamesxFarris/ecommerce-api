@@ -52,21 +52,21 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     // Update a category by its id
-    const [rowsUpdated, [updatedCategory]] = await Category.update(req.body, {
+    const [rowsUpdated] = await Category.update(req.body, {
       where: {
         id: req.params.id,
       },
-      returning: true,
     });
 
     if (rowsUpdated === 0) {
-      // If no rows were updated, 404
       return res.status(404).json({ message: "Category not found." });
     }
 
-    // Gives updated category
+    // Fetch the updated category
+    const updatedCategory = await Category.findByPk(req.params.id);
+
+    // Return the updated category data
     res.status(200).json(updatedCategory);
-    // Catch any errors
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to update category." });
@@ -76,20 +76,18 @@ router.put("/:id", async (req, res) => {
 // DELETE /api/categories/1
 router.delete("/:id", async (req, res) => {
   try {
-    // Delete a category by id
-    const rowsDeleted = await Category.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
+    const categoryId = req.params.id;
 
-    if (rowsDeleted === 0) {
-      // No rows deleted, 404
+    // Check if the category exists
+    const category = await Category.findByPk(categoryId);
+    if (!category) {
       return res.status(404).json({ message: "Category not found." });
     }
 
-    res.status(200).json({ message: "Category deleted." });
-    // Catch any errors
+    // Delete the category, and Sequelize will set category_id to NULL for associated products
+    await category.destroy();
+
+    res.status(200).json({ message: "Category deleted successfully." });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to delete category." });
