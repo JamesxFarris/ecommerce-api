@@ -6,6 +6,11 @@
 <strong> A functional backend with CRUD functionality and routing </strong>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Express](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
+
+
 
 [https://github.com/JamesxFarris/svg-generator/assets/51385562/25cc5fb6-5dc1-445f-be17-161919f0debf](https://github.com/JamesxFarris/ecommerce-api/assets/51385562/6d652403-98bd-483c-9b5b-118c59e06ffa)
 
